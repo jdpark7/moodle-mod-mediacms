@@ -1,0 +1,41 @@
+{{!
+    @template mod_mediacms/view
+
+    MediaCMS video player template.
+}}
+<div class="mediacms-player-container" style="max-width: 100%; margin: 0 auto;">
+    <div class="mediacms-progress-info {{#iscompleted}}mediacms-completed{{/iscompleted}}" id="mediacms-progress-{{uniqid}}">
+        {{#iscompleted}}<strong>Done:</strong>{{/iscompleted}}
+        {{^iscompleted}}<strong>Progress:</strong>{{/iscompleted}}
+         <span class="progress-value">{{progress}}</span>%
+    </div>
+    
+    {{#intro}}
+    <div class="mediacms-intro">
+        {{{intro}}}
+    </div>
+    {{/intro}}
+
+    <div class="mediacms-video-wrapper">
+        <video 
+            id="{{uniqid}}" 
+            class="video-js vjs-big-play-centered vjs-fluid" 
+            controls 
+            preload="auto" 
+            width="640" 
+            height="360"
+            data-setup='{}'>
+            <source src="{{mediacmsurl}}" type="{{mimetype}}">
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+    </div>
+</div>
+
+{{#js}}
+require(['mod_mediacms/module'], function(Module) {
+    Module.init('{{uniqid}}', '{{mediacmsurl}}', {{cmid}}, {{completionminview}});
+});
+{{/js}}
